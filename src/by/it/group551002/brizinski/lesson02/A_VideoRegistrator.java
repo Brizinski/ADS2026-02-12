@@ -1,6 +1,7 @@
 package by.it.group551002.brizinski.lesson02;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 /*
 Даны события events
@@ -26,6 +27,16 @@ public class A_VideoRegistrator {
         List<Double> result;
         result = new ArrayList<>();
         int i = 0;                              //i - это индекс события events[i]
+        int n = events.length;
+        Arrays.sort(events);
+        while (i<n) {
+            double start = events[i];
+            result.add(start);
+            double end = start + workDuration;
+            while (i < n && events[i] <= end) {
+                i++;
+            }
+        }
         //Комментарии от проверочного решения сохранены для подсказки, но вы можете их удалить.
         //Подготовка к жадному поглощению массива событий
         //hint: сортировка Arrays.sort обеспечит скорость алгоритма
