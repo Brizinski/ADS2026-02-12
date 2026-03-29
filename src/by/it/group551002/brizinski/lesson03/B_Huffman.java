@@ -57,7 +57,30 @@ public class B_Huffman {
         Integer length = scanner.nextInt();
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! НАЧАЛО ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         //тут запишите ваше решение
+        scanner.nextLine();
 
+        // Храним код ---> символ
+        java.util.Map<String, Character> map = new java.util.HashMap<>();
+
+        for (int i = 0; i < count; i++) {
+            String line = scanner.nextLine();
+            String[] parts = line.split(": ");
+            char letter = parts[0].charAt(0);
+            String code = parts[1];
+            map.put(code, letter);
+        }
+
+        String encoded = scanner.nextLine();
+
+        StringBuilder currentCode = new StringBuilder();
+
+        for (char bit : encoded.toCharArray()) {
+            currentCode.append(bit);
+            if (map.containsKey(currentCode.toString())) {
+                result.append(map.get(currentCode.toString()));
+                currentCode.setLength(0); // сброс
+            }
+        }
 
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
         return result.toString(); //01001100100111

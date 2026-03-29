@@ -74,22 +74,67 @@ public class C_HeapMax {
         //Будет мало? Ну тогда можете его собрать как Generic и/или использовать в варианте B
         private List<Long> heap = new ArrayList<>();
 
-        int siftDown(int i) { //просеивание вверх
-
+        int siftUp(int i) { //просеивание вверх
+            while (i > 0) {
+                int parent = (i - 1) / 2;
+                if (heap.get(i) > heap.get(parent)) {
+                    // меняем местами
+                    Long temp = heap.get(i);
+                    heap.set(i, heap.get(parent));
+                    heap.set(parent, temp);
+                    i = parent;
+                } else {
+                    break;
+                }
+            }
             return i;
         }
 
-        int siftUp(int i) { //просеивание вниз
+        int siftDown(int i) { //просеивание вниз
+            int size = heap.size();
+            while (true) {
+                int left = 2 * i + 1;
+                int right = 2 * i + 2;
+                int largest = i;
 
+                if (left < size && heap.get(left) > heap.get(largest)) {
+                    largest = left;
+                }
+
+                if (right < size && heap.get(right) > heap.get(largest)) {
+                    largest = right;
+                }
+
+                if (largest != i) {
+                    Long temp = heap.get(i);
+                    heap.set(i, heap.get(largest));
+                    heap.set(largest, temp);
+                    i = largest;
+                } else {
+                    break;
+                }
+            }
             return i;
         }
 
         void insert(Long value) { //вставка
+            heap.add(value);    //в конец
+            siftUp(heap.size() - 1);    //вверх
         }
 
         Long extractMax() { //извлечение и удаление максимума
-            Long result = null;
+            if (heap.isEmpty()) return null;
 
+            Long result = heap.get(0); // максимум
+
+            Long last = heap.remove(heap.size() - 1); // последний элемент
+
+            if (!heap.isEmpty()) {
+                heap.set(0, last);    // ставим его в корень
+                siftDown(0);          // просеиваем вниз
+            }
+
+            System.out.print(result + " ");
             return result;
         }
         //!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! КОНЕЦ ЗАДАЧИ !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
